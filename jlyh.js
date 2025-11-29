@@ -10,7 +10,7 @@
  * scriptVersionNow = "0.0.1";
  */
 
-let Notify = 0; 
+let Notify = 1; // 0为关闭通知,1为打开通知,默认为1 
 const ckName = "jlyh";
 const $ = new Env("吉利银河");
 let msg = "";

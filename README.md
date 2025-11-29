@@ -185,16 +185,27 @@ npm install axios request tough-cookie crypto-js
 ### 3. 报错：`userName is not defined`
 **原因**: 脚本已修复此问题，请更新到最新版本
 
-### 4. 通知发送失败
+### 4. 通知发送失败或没有收到通知
 **原因**: 
 - 未配置推送渠道
+- 脚本中 `Notify = 0`（通知被关闭）
 - 青龙面板：未在环境变量中配置
 - 本地运行：未在 sendNotify.js 中配置
 
+**排查步骤**:
+```bash
+# 1. 测试通知功能
+node test-notify.js
+
+# 2. 检查脚本中的 Notify 变量
+# 确保 Notify = 1 或 CONFIG.NOTIFY = 1
+```
+
 **解决方案**:
+- 检查脚本中 `Notify` 或 `CONFIG.NOTIFY` 是否为 1
 - 青龙用户：在环境变量中添加推送配置（如 PUSH_KEY）
 - 本地用户：编辑 sendNotify.js 中的 push_config
-- 或将脚本中的 `Notify` 设置为 0 关闭通知
+- 如不需要通知：将 `Notify` 设置为 0
 
 ### 5. 青龙面板中运行失败
 **原因**: 青龙面板可能缺少依赖

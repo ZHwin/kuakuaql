@@ -873,31 +873,26 @@ async function SendMsg(message) {
         try {
             logger.info('📤 准备发送通知...');
             if ($.isNode()) {
-                // 检查 sendNotify.js 是否存在
-                const fs = require('fs');
-                const path = require('path');
-                const notifyPath = path.join(__dirname, 'sendNotify.js');
-                
-                if (fs.existsSync(notifyPath)) {
-                    try {
-                        const notify = require('./sendNotify');
-                        await notify.sendNotify($.name, message);
-                        logger.success('✅ 通知发送成功');
-                    } catch (notifyError) {
-                        // 如果是 got 相关错误，给出友好提示
-                        if (notifyError.message.includes('got')) {
-                            logger.warn('⚠️ 通知模块缺少依赖，请安装: npm install got');
-                            logger.info('💡 或者将 CONFIG.NOTIFY 设置为 0 关闭通知功能');
-                        } else {
-                            logger.error(`❌ 通知发送失败: ${notifyError.message}`);
-                        }
-                        logger.debug(`错误详情: ${notifyError.stack}`);
-                        // 通知失败不影响主流程，继续执行
-                        logger.info('ℹ️ 通知发送失败，但脚本已正常执行完成');
+                try {
+                    // 尝试加载 sendNotify（青龙面板自带或本地的）
+                    const notify = require('./sendNotify');
+                    await notify.sendNotify($.name, message);
+                    logger.success('✅ 通知发送成功');
+                } catch (notifyError) {
+                    // 如果是模块未找到错误
+                    if (notifyError.code === 'MODULE_NOT_FOUND') {
+                        logger.warn('⚠️ 未找到 sendNotify.js 文件');
+                        logger.info('💡 提示: 将 CONFIG.NOTIFY 设置为 0 可关闭通知功能');
+                    } else if (notifyError.message && notifyError.message.includes('got')) {
+                        logger.warn('⚠️ 通知模块缺少依赖');
+                        logger.info('💡 青龙面板用户：在依赖管理中安装 axios');
+                        logger.info('💡 本地用户：npm install axios');
+                    } else {
+                        logger.error(`❌ 通知发送失败: ${notifyError.message}`);
                     }
-                } else {
-                    logger.warn('⚠️ 未找到 sendNotify.js 文件');
-                    logger.info('💡 提示: 将 CONFIG.NOTIFY 设置为 0 可关闭通知功能');
+                    logger.debug(`错误详情: ${notifyError.stack}`);
+                    // 通知失败不影响主流程，继续执行
+                    logger.info('ℹ️ 通知发送失败，但脚本已正常执行完成');
                 }
             } else {
                 $.msg(message);
