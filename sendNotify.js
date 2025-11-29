@@ -36,50 +36,100 @@ try {
 }
 const timeout = 15000;
 
-// 默认配置（不要在这里修改，会被更新覆盖）
-let push_config = {
-  HITOKOTO: true,
-  BARK_PUSH: '', BARK_ARCHIVE: '', BARK_GROUP: '', BARK_SOUND: '', BARK_ICON: '', BARK_LEVEL: '', BARK_URL: '',
-  DD_BOT_SECRET: '', DD_BOT_TOKEN: '',
-  FSKEY: '',
-  GOBOT_URL: '', GOBOT_QQ: '', GOBOT_TOKEN: '',
-  GOTIFY_URL: '', GOTIFY_TOKEN: '', GOTIFY_PRIORITY: 0,
-  IGOT_PUSH_KEY: '',
-  PUSH_KEY: '',
-  DEER_KEY: '', DEER_URL: '',
-  CHAT_URL: '', CHAT_TOKEN: '',
-  PUSH_PLUS_TOKEN: '', PUSH_PLUS_USER: '', PUSH_PLUS_TEMPLATE: 'html', PUSH_PLUS_CHANNEL: 'wechat',
-  PUSH_PLUS_WEBHOOK: '', PUSH_PLUS_CALLBACKURL: '', PUSH_PLUS_TO: '',
-  WE_PLUS_BOT_TOKEN: '', WE_PLUS_BOT_RECEIVER: '', WE_PLUS_BOT_VERSION: 'pro',
-  QMSG_KEY: '', QMSG_TYPE: '',
-  QYWX_ORIGIN: 'https://qyapi.weixin.qq.com', QYWX_AM: '', QYWX_KEY: '',
-  TG_BOT_TOKEN: '', TG_USER_ID: '', TG_API_HOST: 'https://api.telegram.org',
-  TG_PROXY_AUTH: '', TG_PROXY_HOST: '', TG_PROXY_PORT: '',
-  AIBOTK_KEY: '', AIBOTK_TYPE: '', AIBOTK_NAME: '',
-  SMTP_SERVICE: '', SMTP_EMAIL: '', SMTP_PASSWORD: '', SMTP_NAME: '',
-  PUSHME_KEY: '',
-  CHRONOCAT_QQ: '', CHRONOCAT_TOKEN: '', CHRONOCAT_URL: '',
-  WEBHOOK_URL: '', WEBHOOK_BODY: '', WEBHOOK_HEADERS: '', WEBHOOK_METHOD: '', WEBHOOK_CONTENT_TYPE: '',
-  NTFY_URL: '', NTFY_TOPIC: '', NTFY_PRIORITY: '3',
-  WXPUSHER_APP_TOKEN: '', WXPUSHER_TOPIC_IDS: '', WXPUSHER_UIDS: '',
+// 通知配置
+// 青龙面板用户：直接在青龙面板的环境变量中配置，无需修改此文件
+// 本地运行用户：可以在下方直接填写配置，或使用环境变量
+const push_config = {
+  HITOKOTO: true, // 启用一言（随机句子）
+
+  BARK_PUSH: '', // bark IP 或设备码，例：https://api.day.app/DxHcxxxxxRxxxxxxcm/
+  BARK_ARCHIVE: '', // bark 推送是否存档
+  BARK_GROUP: '', // bark 推送分组
+  BARK_SOUND: '', // bark 推送声音
+  BARK_ICON: '', // bark 推送图标
+  BARK_LEVEL: '', // bark 推送时效性
+  BARK_URL: '', // bark 推送跳转URL
+
+  DD_BOT_SECRET: '', // 钉钉机器人的 DD_BOT_SECRET
+  DD_BOT_TOKEN: '', // 钉钉机器人的 DD_BOT_TOKEN
+
+  FSKEY: '', // 飞书机器人的 FSKEY
+
+  GOBOT_URL: '', // go-cqhttp
+  GOBOT_QQ: '', // go-cqhttp 的推送群或用户
+  GOBOT_TOKEN: '', // go-cqhttp 的 access_token
+
+  GOTIFY_URL: '', // gotify地址,如https://push.example.de:8080
+  GOTIFY_TOKEN: '', // gotify的消息应用token
+  GOTIFY_PRIORITY: 0, // 推送消息优先级,默认为0
+
+  IGOT_PUSH_KEY: '', // iGot 聚合推送的 IGOT_PUSH_KEY
+
+  PUSH_KEY: '', // server 酱的 PUSH_KEY，兼容旧版与 Turbo 版
+
+  DEER_KEY: '', // PushDeer 的 PUSHDEER_KEY
+  DEER_URL: '', // PushDeer 的 PUSHDEER_URL
+
+  CHAT_URL: '', // synology chat url
+  CHAT_TOKEN: '', // synology chat token
+
+  PUSH_PLUS_TOKEN: '', // pushplus 推送的用户令牌
+  PUSH_PLUS_USER: '', // pushplus 推送的群组编码
+  PUSH_PLUS_TEMPLATE: 'html', // pushplus 发送模板
+  PUSH_PLUS_CHANNEL: 'wechat', // pushplus 发送渠道
+  PUSH_PLUS_WEBHOOK: '', // pushplus webhook编码
+  PUSH_PLUS_CALLBACKURL: '', // pushplus 发送结果回调地址
+  PUSH_PLUS_TO: '', // pushplus 好友令牌
+
+  WE_PLUS_BOT_TOKEN: '', // 微加机器人的用户令牌
+  WE_PLUS_BOT_RECEIVER: '', // 微加机器人的消息接收人
+  WE_PLUS_BOT_VERSION: 'pro', // 微加机器人调用版本
+
+  QMSG_KEY: '', // qmsg 酱的 QMSG_KEY
+  QMSG_TYPE: '', // qmsg 酱的 QMSG_TYPE
+
+  QYWX_ORIGIN: 'https://qyapi.weixin.qq.com', // 企业微信代理地址
+  QYWX_AM: '', // 企业微信应用
+  QYWX_KEY: '', // 企业微信机器人的 webhook
+
+  TG_BOT_TOKEN: '', // tg 机器人的 TG_BOT_TOKEN
+  TG_USER_ID: '', // tg 机器人的 TG_USER_ID
+  TG_API_HOST: 'https://api.telegram.org', // tg 代理 api
+  TG_PROXY_AUTH: '', // tg 代理认证参数
+  TG_PROXY_HOST: '', // tg 机器人的 TG_PROXY_HOST
+  TG_PROXY_PORT: '', // tg 机器人的 TG_PROXY_PORT
+
+  AIBOTK_KEY: '', // 智能微秘书 apikey
+  AIBOTK_TYPE: '', // 智能微秘书 发送目标
+  AIBOTK_NAME: '', // 智能微秘书 发送群名或好友昵称
+
+  SMTP_SERVICE: '', // 邮箱服务名称
+  SMTP_EMAIL: '', // SMTP 收发件邮箱
+  SMTP_PASSWORD: '', // SMTP 登录密码
+  SMTP_NAME: '', // SMTP 收发件人姓名
+
+  PUSHME_KEY: '', // PushMe 酱的 PUSHME_KEY
+
+  CHRONOCAT_QQ: '', // CHRONOCAT QQ
+  CHRONOCAT_TOKEN: '', // CHRONOCAT TOKEN
+  CHRONOCAT_URL: '', // CHRONOCAT URL
+
+  WEBHOOK_URL: '', // 自定义通知 请求地址
+  WEBHOOK_BODY: '', // 自定义通知 请求体
+  WEBHOOK_HEADERS: '', // 自定义通知 请求头
+  WEBHOOK_METHOD: '', // 自定义通知 请求方法
+  WEBHOOK_CONTENT_TYPE: '', // 自定义通知 content-type
+
+  NTFY_URL: '', // ntfy地址
+  NTFY_TOPIC: '', // ntfy的消息应用topic
+  NTFY_PRIORITY: '3', // 推送消息优先级
+
+  WXPUSHER_APP_TOKEN: '', // wxpusher 的 appToken
+  WXPUSHER_TOPIC_IDS: '', // wxpusher 的 主题ID
+  WXPUSHER_UIDS: '', // wxpusher 的 用户ID
 };
 
-// 优先级：本地配置文件 > 环境变量 > 默认配置
-// 1. 尝试加载本地配置文件（不会被 git 追踪）
-try {
-  const fs = require('fs');
-  const path = require('path');
-  const configPath = path.join(__dirname, 'sendNotify.config.js');
-  if (fs.existsSync(configPath)) {
-    const localConfig = require('./sendNotify.config.js');
-    push_config = { ...push_config, ...localConfig };
-    console.log('✅ 已加载本地通知配置文件');
-  }
-} catch (e) {
-  // 本地配置文件不存在或加载失败，使用默认配置
-}
-
-// 2. 环境变量覆盖配置（青龙面板使用）
+// 环境变量覆盖配置
 for (const key in push_config) {
   const v = process.env[key];
   if (v) {

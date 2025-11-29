@@ -3,9 +3,6 @@ node_modules/
 package-lock.json
 yarn.lock
 
-# 本地配置文件（不要提交到 git）
-sendNotify.config.js
-
 # 日志文件
 *.log
 npm-debug.log*
@@ -17,10 +14,6 @@ yarn-error.log*
 *.temp
 .DS_Store
 Thumbs.db
-
-# 用户数据
-*.json
-!package.json
 
 # IDE 配置
 .vscode/

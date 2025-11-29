@@ -47,30 +47,16 @@
 
 ## 🔔 通知功能
 
-所有脚本均使用 `sendNotify.js` 统一推送通知，支持多种通知方式：
+所有脚本均使用 `sendNotify.js` 统一推送通知，支持 20+ 种通知方式：
 - Server酱、Bark、PushPlus、WxPusher
 - 企业微信、钉钉机器人、飞书机器人
-- Telegram Bot、邮件推送
-- 自定义 Webhook
-- 等 20+ 种推送渠道
+- Telegram Bot、邮件推送、自定义 Webhook 等
 
-### 配置通知（重要！）
+### 配置通知
 
-**📖 详细教程请查看：[通知配置说明.md](./通知配置说明.md)**
+#### 青龙面板用户（推荐）
 
-#### 方式一：本地配置文件（推荐，不会被更新覆盖）
-
-```bash
-# 1. 复制配置示例
-cp sendNotify.config.example.js sendNotify.config.js
-
-# 2. 编辑配置文件，填入你的密钥
-# sendNotify.config.js 已加入 .gitignore，不会被 git 追踪
-```
-
-#### 方式二：环境变量（青龙面板推荐）
-
-在青龙面板 → 环境变量中添加：
+直接在青龙面板 → 环境变量中添加：
 ```
 PUSH_KEY=你的Server酱Key
 BARK_PUSH=https://api.day.app/你的设备码/
@@ -78,10 +64,27 @@ TG_BOT_TOKEN=你的Telegram_Bot_Token
 TG_USER_ID=你的Telegram_User_ID
 ```
 
-**优势**：
-- ✅ 配置不会被 git pull 覆盖
-- ✅ 支持多个推送渠道同时使用
-- ✅ 本地配置优先级高于环境变量
+**说明**：
+- ✅ 青龙自带 sendNotify.js，功能完善
+- ✅ 无需上传本仓库的 sendNotify.js
+- ✅ 环境变量配置，所有脚本共享
+
+#### 本地运行用户
+
+直接编辑 `sendNotify.js` 文件，在 `push_config` 中填入配置：
+```javascript
+const push_config = {
+  PUSH_KEY: '你的Server酱Key',
+  BARK_PUSH: 'https://api.day.app/你的设备码/',
+  // ... 其他配置
+};
+```
+
+或使用环境变量：
+```bash
+export PUSH_KEY="你的Server酱Key"
+node jlyh.js
+```
 
 ## 📦 依赖安装
 
@@ -104,15 +107,25 @@ npm install axios got@11 request tough-cookie crypto-js
 
 快速步骤：
 1. 安装依赖：`axios request tough-cookie crypto-js`（不要装 got）
-2. 上传脚本文件到青龙面板
-3. 添加对应的环境变量
-4. 设置定时任务或手动运行
+2. 上传脚本文件：`jlyh.js ljzf.js xmh.js xmyx.js`
+3. **不要上传 sendNotify.js**（青龙自带，功能更完善）
+4. 添加对应的环境变量
+5. 设置定时任务或手动运行
 
-**重要**: 青龙 2.14+ 不兼容 got 库，本脚本已自动使用 axios 替代
+**重要**: 
+- 青龙 2.14+ 不兼容 got 库，本脚本已自动使用 axios 替代
+- 青龙自带 sendNotify.js，无需上传本仓库的版本
 
 ### 本地运行
+
 ```bash
-# 设置环境变量后直接运行
+# 1. 安装依赖
+npm install
+
+# 2. 配置通知（可选）
+# 编辑 sendNotify.js 中的 push_config 填入你的通知配置
+
+# 3. 运行脚本
 node jlyh.js
 node ljzf.js
 node xmh.js
@@ -122,6 +135,9 @@ node xmyx.js
 ## ⚙️ 工具文件
 
 - **sendNotify.js**: 统一通知推送模块
+  - 🔔 青龙面板用户：使用青龙自带的，无需上传此文件
+  - 💻 本地运行用户：使用本仓库的版本
+  - 🔧 已修复高版本 Node.js 的 got 库兼容性问题
 - **utils.js**: 通用工具函数库
 
 ## ⚠️ 免责声明
@@ -171,12 +187,13 @@ npm install axios request tough-cookie crypto-js
 
 ### 4. 通知发送失败
 **原因**: 
-- 未配置 sendNotify.js 中的推送渠道
-- 未安装 got 库
+- 未配置推送渠道
+- 青龙面板：未在环境变量中配置
+- 本地运行：未在 sendNotify.js 中配置
 
 **解决方案**:
-- 检查 sendNotify.js 中的推送配置
-- 确保已安装 got 库
+- 青龙用户：在环境变量中添加推送配置（如 PUSH_KEY）
+- 本地用户：编辑 sendNotify.js 中的 push_config
 - 或将脚本中的 `Notify` 设置为 0 关闭通知
 
 ### 5. 青龙面板中运行失败

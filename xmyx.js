@@ -53,7 +53,21 @@ const ckName = "xmyx_data";
 //-------------------- 一般不动变量区域 -------------------------------------
 $.appid = "wx4205ec55b793245e";
 const Notify = 1;//0为关闭通知,1为打开通知,默认为1
-const notify = $.isNode() ? require('./sendNotify') : '';
+// 优先使用青龙面板自带的 sendNotify，如果不存在则使用本地的
+const notify = $.isNode() ? (() => {
+  try {
+    // 尝试加载青龙面板的 sendNotify
+    return require('./sendNotify');
+  } catch (e) {
+    try {
+      // 如果青龙的不存在，尝试加载本地的
+      return require('./sendNotify');
+    } catch (err) {
+      console.log('⚠️ sendNotify 加载失败，通知功能将不可用');
+      return null;
+    }
+  }
+})() : '';
 // 初始化 got 库
 if ($.isNode()) {
   try {

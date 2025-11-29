@@ -7,7 +7,15 @@
 // wSWQiOiIxIiwic2l25tKNA7BQuLVgXCbJsU79CeJUS8inM6PyM7eGX8xL2kcy99Naz41C2qycwEhu1EK7imYASNPsEFsXGK8bcpHpYA3wYnPEJZ8rRXok5CxdLfdKvWU1u6mJpw1Kz3AMxWh6gh31d1E # 老婆的账号
 
 const $ = init();
-const notify = $.isNode() ? require('./sendNotify') : '';
+// 优先使用青龙面板自带的 sendNotify
+const notify = $.isNode() ? (() => {
+  try {
+    return require('./sendNotify');
+  } catch (e) {
+    console.log('⚠️ sendNotify 加载失败，通知功能将不可用');
+    return null;
+  }
+})() : '';
 const API_HOST = "https://momclub.feihe.com";
 
 // 初始化函数
