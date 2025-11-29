@@ -48,19 +48,40 @@
 ## 🔔 通知功能
 
 所有脚本均使用 `sendNotify.js` 统一推送通知，支持多种通知方式：
-- Server酱
-- Bark
-- 企业微信
-- 钉钉机器人
-- 飞书机器人
-- Telegram Bot
-- PushPlus
-- 等多种推送渠道
+- Server酱、Bark、PushPlus、WxPusher
+- 企业微信、钉钉机器人、飞书机器人
+- Telegram Bot、邮件推送
+- 自定义 Webhook
+- 等 20+ 种推送渠道
 
-### 配置通知
-1. 在 `sendNotify.js` 中配置你的推送渠道
-2. 或在青龙面板中配置对应的环境变量
-3. 部分脚本可通过 `NOTIFY` 变量控制是否推送
+### 配置通知（重要！）
+
+**📖 详细教程请查看：[通知配置说明.md](./通知配置说明.md)**
+
+#### 方式一：本地配置文件（推荐，不会被更新覆盖）
+
+```bash
+# 1. 复制配置示例
+cp sendNotify.config.example.js sendNotify.config.js
+
+# 2. 编辑配置文件，填入你的密钥
+# sendNotify.config.js 已加入 .gitignore，不会被 git 追踪
+```
+
+#### 方式二：环境变量（青龙面板推荐）
+
+在青龙面板 → 环境变量中添加：
+```
+PUSH_KEY=你的Server酱Key
+BARK_PUSH=https://api.day.app/你的设备码/
+TG_BOT_TOKEN=你的Telegram_Bot_Token
+TG_USER_ID=你的Telegram_User_ID
+```
+
+**优势**：
+- ✅ 配置不会被 git pull 覆盖
+- ✅ 支持多个推送渠道同时使用
+- ✅ 本地配置优先级高于环境变量
 
 ## 📦 依赖安装
 

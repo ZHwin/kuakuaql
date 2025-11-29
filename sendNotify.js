@@ -36,116 +36,50 @@ try {
 }
 const timeout = 15000;
 
-const push_config = {
-  HITOKOTO: true, // 启用一言（随机句子）
-
-  BARK_PUSH: '', // bark IP 或设备码，例：https://api.day.app/DxHcxxxxxRxxxxxxcm/
-  BARK_ARCHIVE: '', // bark 推送是否存档
-  BARK_GROUP: '', // bark 推送分组
-  BARK_SOUND: '', // bark 推送声音
-  BARK_ICON: '', // bark 推送图标
-  BARK_LEVEL: '', // bark 推送时效性
-  BARK_URL: '', // bark 推送跳转URL
-
-  DD_BOT_SECRET: '', // 钉钉机器人的 DD_BOT_SECRET
-  DD_BOT_TOKEN: '', // 钉钉机器人的 DD_BOT_TOKEN
-
-  FSKEY: '', // 飞书机器人的 FSKEY
-
-  // 推送到个人QQ：http://127.0.0.1/send_private_msg
-  // 群：http://127.0.0.1/send_group_msg
-  GOBOT_URL: '', // go-cqhttp
-  // 推送到个人QQ 填入 user_id=个人QQ
-  // 群 填入 group_id=QQ群
-  GOBOT_QQ: '', // go-cqhttp 的推送群或用户
-  GOBOT_TOKEN: '', // go-cqhttp 的 access_token
-
-  GOTIFY_URL: '', // gotify地址,如https://push.example.de:8080
-  GOTIFY_TOKEN: '', // gotify的消息应用token
-  GOTIFY_PRIORITY: 0, // 推送消息优先级,默认为0
-
-  IGOT_PUSH_KEY: '', // iGot 聚合推送的 IGOT_PUSH_KEY，例如：https://push.hellyw.com/XXXXXXXX
-
-  PUSH_KEY: '', // server 酱的 PUSH_KEY，兼容旧版与 Turbo 版
-
-  DEER_KEY: '', // PushDeer 的 PUSHDEER_KEY
-  DEER_URL: '', // PushDeer 的 PUSHDEER_URL
-
-  CHAT_URL: '', // synology chat url
-  CHAT_TOKEN: '', // synology chat token
-
-  // 官方文档：https://www.pushplus.plus/
-  PUSH_PLUS_TOKEN: '', // pushplus 推送的用户令牌
-  PUSH_PLUS_USER: '', // pushplus 推送的群组编码
-  PUSH_PLUS_TEMPLATE: 'html', // pushplus 发送模板，支持html,txt,json,markdown,cloudMonitor,jenkins,route,pay
-  PUSH_PLUS_CHANNEL: 'wechat', // pushplus 发送渠道，支持wechat,webhook,cp,mail,sms
-  PUSH_PLUS_WEBHOOK: '', // pushplus webhook编码，可在pushplus公众号上扩展配置出更多渠道
-  PUSH_PLUS_CALLBACKURL: '', // pushplus 发送结果回调地址，会把推送最终结果通知到这个地址上
-  PUSH_PLUS_TO: '', // pushplus 好友令牌，微信公众号渠道填写好友令牌，企业微信渠道填写企业微信用户id
-
-  // 微加机器人，官方网站：https://www.weplusbot.com/
-  WE_PLUS_BOT_TOKEN: '', // 微加机器人的用户令牌
-  WE_PLUS_BOT_RECEIVER: '', // 微加机器人的消息接收人
-  WE_PLUS_BOT_VERSION: 'pro', //微加机器人调用版本，pro和personal；为空默认使用pro(专业版)，个人版填写：personal
-
-  QMSG_KEY: '', // qmsg 酱的 QMSG_KEY
-  QMSG_TYPE: '', // qmsg 酱的 QMSG_TYPE
-
-  QYWX_ORIGIN: 'https://qyapi.weixin.qq.com', // 企业微信代理地址
-
-  /*
-    此处填你企业微信应用消息的值(详见文档 https://work.weixin.qq.com/api/doc/90000/90135/90236)
-    环境变量名 QYWX_AM依次填入 corpid,corpsecret,touser(注:多个成员ID使用|隔开),agentid,消息类型(选填,不填默认文本消息类型)
-    注意用,号隔开(英文输入法的逗号)，例如：wwcff56746d9adwers,B-791548lnzXBE6_BWfxdf3kSTMJr9vFEPKAbh6WERQ,mingcheng,1000001,2COXgjH2UIfERF2zxrtUOKgQ9XklUqMdGSWLBoW_lSDAdafat
-    可选推送消息类型(推荐使用图文消息（mpnews）):
-    - 文本卡片消息: 0 (数字零)
-    - 文本消息: 1 (数字一)
-    - 图文消息（mpnews）: 素材库图片id, 可查看此教程(http://note.youdao.com/s/HMiudGkb)或者(https://note.youdao.com/ynoteshare1/index.html?id=1a0c8aff284ad28cbd011b29b3ad0191&type=note)
-  */
-  QYWX_AM: '', // 企业微信应用
-
-  QYWX_KEY: '', // 企业微信机器人的 webhook(详见文档 https://work.weixin.qq.com/api/doc/90000/90136/91770)，例如：693a91f6-7xxx-4bc4-97a0-0ec2sifa5aaa
-
-  TG_BOT_TOKEN: '', // tg 机器人的 TG_BOT_TOKEN，例：1407203283:AAG9rt-6RDaaX0HBLZQq0laNOh898iFYaRQ
-  TG_USER_ID: '', // tg 机器人的 TG_USER_ID，例：1434078534
-  TG_API_HOST: 'https://api.telegram.org', // tg 代理 api
-  TG_PROXY_AUTH: '', // tg 代理认证参数
-  TG_PROXY_HOST: '', // tg 机器人的 TG_PROXY_HOST
-  TG_PROXY_PORT: '', // tg 机器人的 TG_PROXY_PORT
-
-  AIBOTK_KEY: '', // 智能微秘书 个人中心的apikey 文档地址：http://wechat.aibotk.com/docs/about
-  AIBOTK_TYPE: '', // 智能微秘书 发送目标 room 或 contact
-  AIBOTK_NAME: '', // 智能微秘书  发送群名 或者好友昵称和type要对应好
-
-  SMTP_SERVICE: '', // 邮箱服务名称，比如 126、163、Gmail、QQ 等，支持列表 https://github.com/nodemailer/nodemailer/blob/master/lib/well-known/services.json
-  SMTP_EMAIL: '', // SMTP 收发件邮箱，通知将会由自己发给自己
-  SMTP_PASSWORD: '', // SMTP 登录密码，也可能为特殊口令，视具体邮件服务商说明而定
-  SMTP_NAME: '', // SMTP 收发件人姓名，可随意填写
-
-  PUSHME_KEY: '', // 官方文档：https://push.i-i.me，PushMe 酱的 PUSHME_KEY
-
-  // CHRONOCAT API https://chronocat.vercel.app/install/docker/official/
-  CHRONOCAT_QQ: '', // 个人: user_id=个人QQ 群则填入 group_id=QQ群 多个用英文;隔开同时支持个人和群
-  CHRONOCAT_TOKEN: '', // 填写在CHRONOCAT文件生成的访问密钥
-  CHRONOCAT_URL: '', // Red 协议连接地址 例： http://127.0.0.1:16530
-
-  WEBHOOK_URL: '', // 自定义通知 请求地址
-  WEBHOOK_BODY: '', // 自定义通知 请求体
-  WEBHOOK_HEADERS: '', // 自定义通知 请求头
-  WEBHOOK_METHOD: '', // 自定义通知 请求方法
-  WEBHOOK_CONTENT_TYPE: '', // 自定义通知 content-type
-
-  NTFY_URL: '', // ntfy地址,如https://ntfy.sh,默认为https://ntfy.sh
-  NTFY_TOPIC: '', // ntfy的消息应用topic
-  NTFY_PRIORITY: '3', // 推送消息优先级,默认为3
-
-  // 官方文档: https://wxpusher.zjiecode.com/docs/
-  // 管理后台: https://wxpusher.zjiecode.com/admin/
-  WXPUSHER_APP_TOKEN: '', // wxpusher 的 appToken
-  WXPUSHER_TOPIC_IDS: '', // wxpusher 的 主题ID，多个用英文分号;分隔 topic_ids 与 uids 至少配置一个才行
-  WXPUSHER_UIDS: '', // wxpusher 的 用户ID，多个用英文分号;分隔 topic_ids 与 uids 至少配置一个才行
+// 默认配置（不要在这里修改，会被更新覆盖）
+let push_config = {
+  HITOKOTO: true,
+  BARK_PUSH: '', BARK_ARCHIVE: '', BARK_GROUP: '', BARK_SOUND: '', BARK_ICON: '', BARK_LEVEL: '', BARK_URL: '',
+  DD_BOT_SECRET: '', DD_BOT_TOKEN: '',
+  FSKEY: '',
+  GOBOT_URL: '', GOBOT_QQ: '', GOBOT_TOKEN: '',
+  GOTIFY_URL: '', GOTIFY_TOKEN: '', GOTIFY_PRIORITY: 0,
+  IGOT_PUSH_KEY: '',
+  PUSH_KEY: '',
+  DEER_KEY: '', DEER_URL: '',
+  CHAT_URL: '', CHAT_TOKEN: '',
+  PUSH_PLUS_TOKEN: '', PUSH_PLUS_USER: '', PUSH_PLUS_TEMPLATE: 'html', PUSH_PLUS_CHANNEL: 'wechat',
+  PUSH_PLUS_WEBHOOK: '', PUSH_PLUS_CALLBACKURL: '', PUSH_PLUS_TO: '',
+  WE_PLUS_BOT_TOKEN: '', WE_PLUS_BOT_RECEIVER: '', WE_PLUS_BOT_VERSION: 'pro',
+  QMSG_KEY: '', QMSG_TYPE: '',
+  QYWX_ORIGIN: 'https://qyapi.weixin.qq.com', QYWX_AM: '', QYWX_KEY: '',
+  TG_BOT_TOKEN: '', TG_USER_ID: '', TG_API_HOST: 'https://api.telegram.org',
+  TG_PROXY_AUTH: '', TG_PROXY_HOST: '', TG_PROXY_PORT: '',
+  AIBOTK_KEY: '', AIBOTK_TYPE: '', AIBOTK_NAME: '',
+  SMTP_SERVICE: '', SMTP_EMAIL: '', SMTP_PASSWORD: '', SMTP_NAME: '',
+  PUSHME_KEY: '',
+  CHRONOCAT_QQ: '', CHRONOCAT_TOKEN: '', CHRONOCAT_URL: '',
+  WEBHOOK_URL: '', WEBHOOK_BODY: '', WEBHOOK_HEADERS: '', WEBHOOK_METHOD: '', WEBHOOK_CONTENT_TYPE: '',
+  NTFY_URL: '', NTFY_TOPIC: '', NTFY_PRIORITY: '3',
+  WXPUSHER_APP_TOKEN: '', WXPUSHER_TOPIC_IDS: '', WXPUSHER_UIDS: '',
 };
 
+// 优先级：本地配置文件 > 环境变量 > 默认配置
+// 1. 尝试加载本地配置文件（不会被 git 追踪）
+try {
+  const fs = require('fs');
+  const path = require('path');
+  const configPath = path.join(__dirname, 'sendNotify.config.js');
+  if (fs.existsSync(configPath)) {
+    const localConfig = require('./sendNotify.config.js');
+    push_config = { ...push_config, ...localConfig };
+    console.log('✅ 已加载本地通知配置文件');
+  }
+} catch (e) {
+  // 本地配置文件不存在或加载失败，使用默认配置
+}
+
+// 2. 环境变量覆盖配置（青龙面板使用）
 for (const key in push_config) {
   const v = process.env[key];
   if (v) {
