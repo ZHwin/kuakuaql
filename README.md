@@ -65,18 +65,29 @@
 ## 📦 依赖安装
 
 ```bash
-# 安装必要依赖
-npm install axios
-npm install got
-npm install request
+# 方式一：使用 package.json 一键安装（推荐）
+npm install
+
+# 方式二：手动安装各个依赖
+npm install axios got@11 request tough-cookie crypto-js
 ```
+
+**注意**: 
+- `got` 库请使用 v11 版本，v12+ 为 ESM 模块，不兼容当前脚本
+- 如果遇到 `got is not a function` 错误，请确保已正确安装依赖
 
 ## 🚀 使用方法
 
-### 青龙面板
-1. 将脚本文件上传到青龙面板
-2. 添加对应的环境变量
-3. 设置定时任务或手动运行
+### 青龙面板（推荐）
+**📖 详细教程请查看：[青龙面板使用说明.md](./青龙面板使用说明.md)**
+
+快速步骤：
+1. 安装依赖：`axios request tough-cookie crypto-js`（不要装 got）
+2. 上传脚本文件到青龙面板
+3. 添加对应的环境变量
+4. 设置定时任务或手动运行
+
+**重要**: 青龙 2.14+ 不兼容 got 库，本脚本已自动使用 axios 替代
 
 ### 本地运行
 ```bash
@@ -107,8 +118,68 @@ node xmyx.js
 - Cookie 等敏感信息注意保密
 - 如遇到问题，可开启 DEBUG 模式查看详细日志
 
+## ❓ 常见问题
+
+### 1. 报错：`TypeError: this.got is not a function` 或 `got.get is not a function`
+**原因**: 
+- 高版本青龙面板（Node.js 18+）与 got 库不兼容
+- got v12+ 改为 ESM 模块，不支持 `require()` 方式
+
+**解决方案（已自动兼容）**:
+- ✅ 脚本已自动使用 `axios` 替代 `got`，无需手动处理
+- 只需确保安装了 `axios`：
+```bash
+npm install axios
+```
+
+**青龙面板用户**:
+- 在青龙面板的「依赖管理」→「NodeJs」中添加：`axios`
+- 无需安装 `got`，脚本会自动降级使用 axios
+
+**本地用户**:
+```bash
+# 方式一：安装所有依赖（推荐）
+npm install
+
+# 方式二：仅安装必需依赖
+npm install axios request tough-cookie crypto-js
+```
+
+### 3. 报错：`userName is not defined`
+**原因**: 脚本已修复此问题，请更新到最新版本
+
+### 4. 通知发送失败
+**原因**: 
+- 未配置 sendNotify.js 中的推送渠道
+- 未安装 got 库
+
+**解决方案**:
+- 检查 sendNotify.js 中的推送配置
+- 确保已安装 got 库
+- 或将脚本中的 `Notify` 设置为 0 关闭通知
+
+### 5. 青龙面板中运行失败
+**原因**: 青龙面板可能缺少依赖
+
+**解决方案**:
+1. 进入青龙面板 → 依赖管理 → NodeJs
+2. 添加以下依赖（一行一个）：
+   ```
+   axios
+   request
+   tough-cookie
+   crypto-js
+   ```
+3. 点击安装，等待安装完成
+4. **不要安装 got**，脚本已自动兼容
+
+**注意**: 
+- 青龙面板 2.14+ 版本使用 Node.js 18+，不兼容 got 库
+- 本脚本已自动使用 axios 替代，无需担心兼容性问题
+
 ## 🔄 更新日志
 
+- 2024-11-29: 修复 userName 未定义问题，添加 got 库初始化
 - 初始版本发布
 
 ---

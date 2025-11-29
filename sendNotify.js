@@ -1,5 +1,39 @@
 const querystring = require('node:querystring');
-const got = require('got');
+// 兼容高版本青龙面板，优先使用 axios，降级使用 got
+let got;
+let useAxios = false;
+try {
+  got = require('got');
+} catch (e) {
+  console.log('⚠️ got 库加载失败，尝试使用 axios 替代');
+  try {
+    const axios = require('axios');
+    useAxios = true;
+    // 创建 got 兼容层
+    got = {
+      get: async (url, options = {}) => {
+        const res = await axios.get(url, {
+          headers: options.headers,
+          timeout: options.timeout || 15000,
+          responseType: 'text'
+        });
+        return { body: typeof res.data === 'string' ? res.data : JSON.stringify(res.data) };
+      },
+      post: async (url, options = {}) => {
+        const res = await axios.post(url, options.body, {
+          headers: options.headers,
+          timeout: options.timeout || 15000,
+          responseType: 'text'
+        });
+        return { body: typeof res.data === 'string' ? res.data : JSON.stringify(res.data) };
+      }
+    };
+    console.log('✅ 已使用 axios 替代 got 库');
+  } catch (axiosErr) {
+    console.log('❌ axios 也未安装，通知功能将不可用');
+    got = null;
+  }
+}
 const timeout = 15000;
 
 const push_config = {
@@ -121,6 +155,10 @@ for (const key in push_config) {
 
 const $ = {
   post: (params, callback) => {
+    if (!got) {
+      callback('通知功能不可用：缺少 got 或 axios 库');
+      return;
+    }
     const { url, ...others } = params;
     got.post(url, others).then(
       (res) => {
@@ -136,6 +174,10 @@ const $ = {
     );
   },
   get: (params, callback) => {
+    if (!got) {
+      callback('通知功能不可用：缺少 got 或 axios 库');
+      return;
+    }
     const { url, ...others } = params;
     got.get(url, others).then(
       (res) => {
@@ -154,10 +196,17 @@ const $ = {
 };
 
 async function one() {
-  const url = 'https://v1.hitokoto.cn/';
-  const res = await got.get(url);
-  const body = JSON.parse(res.body);
-  return `${body.hitokoto}    ----${body.from}`;
+  if (!got) {
+    return '今日事今日毕    ----古语';
+  }
+  try {
+    const url = 'https://v1.hitokoto.cn/';
+    const res = await got.get(url);
+    const body = JSON.parse(res.body);
+    return `${body.hitokoto}    ----${body.from}`;
+  } catch (e) {
+    return '今日事今日毕    ----古语';
+  }
 }
 
 function gotifyNotify(text, desp) {

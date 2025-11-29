@@ -54,6 +54,14 @@ const ckName = "xmyx_data";
 $.appid = "wx4205ec55b793245e";
 const Notify = 1;//0为关闭通知,1为打开通知,默认为1
 const notify = $.isNode() ? require('./sendNotify') : '';
+// 初始化 got 库
+if ($.isNode()) {
+  try {
+    $.initGotEnv();
+  } catch (e) {
+    console.log('⚠️ got 库初始化失败，部分功能可能受限');
+  }
+}
 let envSplitor = ["@"]; //多账号分隔符
 //var userCookie = ($.isNode() ? process.env[ckName] : $.getdata(ckName)) || '';
 var userCookie =[    
@@ -103,14 +111,18 @@ async function main() {
             await $.wait(user.getRandomTime());
         }
         // 查询用户信息
-        const { score, level, userName, avatar } = await user. getUserInfo() ?? {};
-        user.avatar = avatar;
-        await user.refreshToken(user.token);
-        $.title = `今日任务已全部完成`;
-        DoubleLog(`「${userName}」积分: ${score}, 等级: ${level}`);
+        const userInfoResult = await user.getUserInfo();
+        if (userInfoResult) {
+          const { score, level, userName, avatar } = userInfoResult;
+          user.avatar = avatar;
+          user.userName = userName;
+          await user.refreshToken(user.token);
+          $.title = `今日任务已全部完成`;
+          DoubleLog(`「${userName}」积分: ${score}, 等级: ${level}`);
+        }
       } else {
         //将ck过期消息存入消息数组
-        $.notifyMsg.push(`❌账号${userName || user.index} >> Check ck error!`)
+        $.notifyMsg.push(`❌账号${user.userName || user.index} >> Check ck error!`)
       }
       //账号通知
       $.notifyList.push({ "id": user.index, "avatar": user.avatar, "message": $.notifyMsg });
