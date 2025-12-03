@@ -1,54 +1,73 @@
 /*
-new Env('飞鹤|北纬47度好物');
-@Author: Leiyiyan
-@Date: 2024-10-08 15:05
+================================================================================
+脚本名称: 飞鹤|北纬47度好物（原星妈优选）
+脚本作者: Leiyiyan
+创建日期: 2024-10-08
+最后更新: 2024-12-03
+================================================================================
 
-@Description:
-飞鹤|北纬47度好物（原星妈优选）小程序 每日签到、任务
+【功能说明】
+飞鹤|北纬47度好物小程序 每日签到、自动完成任务
 
-图标： https://raw.githubusercontent.com/leiyiyan/resource/main/icons/xmyx.png
+【使用方法】
+1. 青龙面板配置：
+   - 进入青龙面板 → 环境变量
+   - 添加变量名：xmtoken
+   - 变量值：每行一个token（支持多账号）
+   
+2. 环境变量格式（三种方式任选其一）：
+   方式1（推荐）：换行分隔
+   token1
+   token2
+   token3
+   
+   方式2：&符号分隔
+   token1&token2&token3
+   
+   方式3：@符号分隔
+   token1@token2@token3
 
-抓包https?:\/\/www\.feihevip\.com\/api\/starMember\/getMemberInfo 获取这个接口的token
+【获取Token】
+方法1：抓包获取
+- 抓包地址：https://www.feihevip.com/api/starMember/getMemberInfo
+- 抓取请求头中的 token 字段
 
+方法2：使用抓包工具（推荐使用 Quantumult X 或 Surge）
 [Script]
-http-response ^https?:\/\/www\.feihevip\.com\/api\/starMember\/getMemberInfo script-path=https://raw.githubusercontent.com/leiyiyan/resource/main/script/xmyx/xmyx.js, requires-body=true, timeout=60, tag=星妈优选获取Cookie
-cron "30 0 * * *" script-path=https://raw.githubusercontent.com/le星妈优选日常任务iyiyan/resource/main/script/xmyx/xmyx.js, tag=星妈优选日常任务
+http-response ^https?:\/\/www\.feihevip\.com\/api\/starMember\/getMemberInfo script-path=xmyx.js, requires-body=true, timeout=60, tag=星妈优选获取Cookie
 
 [MITM]
 hostname = www.feihevip.com
 
-====================================
+【定时任务】
+建议每天早上0点30分执行
+cron: 30 0 * * *
+
+【图标】
+https://raw.githubusercontent.com/leiyiyan/resource/main/icons/xmyx.png
+
+================================================================================
 ⚠️【免责声明】
-------------------------------------------
-1、此脚本仅用于学习研究，不保证其合法性、准确性、有效性，请根据情况自行判断，本人对此不承担任何保证责任。
-2、由于此脚本仅用于学习研究，您必须在下载后 24 小时内将所有内容从您的计算机或手机或任何存储设备中完全删除，若违反规定引起任何事件本人对此均不负责。
+================================================================================
+1、此脚本仅用于学习研究，不保证其合法性、准确性、有效性，请根据情况自行判断，
+   本人对此不承担任何保证责任。
+2、由于此脚本仅用于学习研究，您必须在下载后 24 小时内将所有内容从您的计算机
+   或手机或任何存储设备中完全删除，若违反规定引起任何事件本人对此均不负责。
 3、请勿将此脚本用于任何商业或非法目的，若违反规定请自行对此负责。
-4、此脚本涉及应用与本人无关，本人对因此引起的任何隐私泄漏或其他后果不承担任何责任。
-5、本人对任何脚本引发的问题概不负责，包括但不限于由脚本错误引起的任何损失和损害。
-6、如果任何单位或个人认为此脚本可能涉嫌侵犯其权利，应及时通知并提供身份证明，所有权证明，我们将在收到认证文件确认后删除此脚本。
-7、所有直接或间接使用、查看此脚本的人均应该仔细阅读此声明。本人保留随时更改或补充此声明的权利。一旦您使用或复制了此脚本，即视为您已接受此免责声明。
-//const taskList = [
-//  { taskName: "浏览粮油专场10秒", taskType: "XXGG", time: 11 },
-//  { taskName: "逛全网最低好物会场", taskType: "LLQWZDJ", time: 11 },
-//  { taskName: "浏览热销榜单10秒", taskType: "LLZTY", time: 11 },
-//  { taskName: "浏览热销爆品", taskType: "TZSPXQ2", time: 3 },
-//  { taskName: "浏览视频10秒", taskType: "LLSP", time: 11 },
-//  { taskName: "滑动浏览精选超值好物", taskType: "LLQDYSPL", time: 15 },
-//  { taskName: "浏览热销爆品1", taskType: "TZSPXQ3", time: 3 },
-//  { taskName: "浏览儿童玩具早教机", taskType: "TZSPXQ4", time: 3 },
-//  { taskName: "浏览热销爆品2", taskType: "TZSPXQ1", time: 3 },
-//  { taskName: "打开签到提醒", taskType: "YXDY", time: 3 },
-//  { taskName: "大转盘抽奖", taskType: "YXDZP", time: 3 },
-//  { taskName: "购买任意商品1次", taskType: "YXXD", time: 3 },
-//  { taskName: "查看优惠券", taskType: "LLYHJ", time: 3 },
-//  { taskName: "浏览爆品好物", taskType: "TZSPXQ5", time: 3 },
-//  { taskName: "补签赚积分", taskType: "YXBQ", time: 3 }
-//]
- */
+4、此脚本涉及应用与本人无关，本人对因此引起的任何隐私泄漏或其他后果不承担
+   任何责任。
+5、本人对任何脚本引发的问题概不负责，包括但不限于由脚本错误引起的任何损失
+   和损害。
+6、如果任何单位或个人认为此脚本可能涉嫌侵犯其权利，应及时通知并提供身份证明，
+   所有权证明，我们将在收到认证文件确认后删除此脚本。
+7、所有直接或间接使用、查看此脚本的人均应该仔细阅读此声明。本人保留随时更改
+   或补充此声明的权利。一旦您使用或复制了此脚本，即视为您已接受此免责声明。
+================================================================================
+*/
 
 
 const $ = new Env("星妈优选");
-const ckName = "xmyx_data";
+const ckName = "xmtoken";
 
 //-------------------- 一般不动变量区域 -------------------------------------
 $.appid = "wx4205ec55b793245e";
@@ -76,18 +95,11 @@ if ($.isNode()) {
     console.log('⚠️ got 库初始化失败，部分功能可能受限');
   }
 }
-let envSplitor = ["@"]; //多账号分隔符
-//var userCookie = ($.isNode() ? process.env[ckName] : $.getdata(ckName)) || '';
-var userCookie =[    
-{"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ4bXl4IiwiZXhwIjoxNzQzMTg0NTg3LCJpYXQiOjE3NDMxNjk3ODAsInVzZXIiOiJ1c2VySW5mbzpUbUU0ZDdhUGdXT3lDRkQ2b2crTXFuQmFzYkFnMzVIN0RISXRScWhGUzNlekZUeDlGU1kzMkhJMzdTeFFpQmNHUjkrL1gyNmpCY1hRZ1BaaUFVZ1NZcGtOeVcyN1NYRG5MTk5vWHVUdUJKMjRING1jaGNYUGlmd2RHNzhGeFkyVTJibTNzMXY3Zk1HNGVPV0V1Vnp4cEh1SmxxVkhSK0hYc3Y1M2VlNHlKT0ZabDl4RU5DaEwxeVo0VlEvZ3E4SWxBUDVGK1h5NzdUSG9mWGtOc3UvRDhPd2NhYWFncHVTM2cvTVNTWUQwSEhISVZMUEVaV0VKTHBCTGlhMGkxb1YybXhQTUNsN3pEOGNhWERaNW9MUlU0QXdOczJZbERCK3ZlUU9CdklsQ2FkbGI4UWhzb0tRM2pGMnAzMXFyb0RvMTdmZnVnSlNNa2xlcnFnalhpQ3Q3WEE9PSJ9.3qUT_gykSsNkwayB7Pi4-Iu0pK1DYcZ0784N6MofpqA"},
-{"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ4bXl4IiwiZXhwIjoxNzM3Mzg2NTI5LCJpYXQiOjE3MzczNzkzMjksInVzZXIiOiJ1c2VySW5mbzpGRUI3eGVZVXRZcnAwd3pSTGJNSVBzRDJXNHlxSkhibzUzQkViSk9WaTZPK2NaMHZvb0JWSEJONTQ1djgvU09HbmttYXg2SzJkUllJR2JrRU0wdTM0SjA2Zm5Pb0ZXT0YzZWRvQjJROEwwdVlMNVJSRkVYdE5OK3A5S2ZyM0tjdyszWE1NRjZVdU40alNDQThqTitJNzJBTmFVZjIrNGpTbDk5bHJnaDdHa1FNOGJkQnFJbU5Vc2xBc0xQUUNkU1pWODZZdFdUQWpvNVNxMk84c3Q3RVpTVWlXeHREWURuSno1TnVOVi9IMTVPbFpSZW10VE1ScVY1WVdHT0l2Q3ZENUgvbFFiWW5YWnEzUTNMYTBvQzJXTUhpVit0anpYc2libE9ya1kxUW9UZkUrVVJ6U1FiTXRXLzdKcTVQaXgyQ2RZQzVLNnI1YVN5K0k3ME13VFRtbmc9PSJ9.GAS2_7owOaAog-3lW8SLjltOK97qg5UVoVgeI3FK4Sg"},
-{"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ4bXl4IiwiZXhwIjoxNzM3Mzg1ODk0LCJpYXQiOjE3MzczNzg2OTQsInVzZXIiOiJ1c2VySW5mbzpBKzZyQkdncmhjVnIwSzFNeUR1WXdNc1JObmtPRWx3aXBBYjRDSGVzWVF4Wk9FOUVHZWFITExFMy85N3VLS0NWeW5vcThFeVpIa0pLUnd6OXM5TTYwVHd3SGFyMUpEeUtNU3ZRLzZ0NzBidTg3R1k3cDMyNnZFNVpHVlEwY0xtT1VZQWpaVVBVbE9Pd0NiUG1XZmZHMjdiMTJJVURzVGp1NStnZnRjVmdSWXIrN09kYVhBTzJTaDR2U3JZZ3ZtcXFwcmtjSEc5VkRMMWhlYUtZNVlEcmEyUUJuUkc5aXFDdVBuNGdVQUhkTnBqRUtBLy8rRDV6WVBBZGhSNDRrcHpKOUZ3WUJ6WHMvTlFMK2JvVDJMTGpqSmhiUDZSSUlIMzhWM3BsYjErK3dkQ0J1Vm5SUWFhMWs3Tm93NXVqcVErNUZJZkYxRlhaSjZjVXdJd09lSFhmeUE9PSJ9.05wzz-_5g7bg6-KkWgQn5BrJd_4hcKVKFv5ijsL_jNk"},
-{"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ4bXl4IiwiZXhwIjoxNzMxODk5Mjc2LCJpYXQiOjE3MzE4OTIwNzYsInVzZXIiOiJjcm1JZDpDUk0wMDAwMDAwMDAxNjE0NTg0Nzgsb3BlbklkOm82Y2RjNDJmX1VGTGxQVHJ5YURlQlozYWllNVUsdW5pb25JZDpvUTlLc3dpWExPcFE5ZXVzcF9mYlN6UHNjd3VZLHZlcnNpb246VjIifQ.HlRRvkixTklaJwoaVatbRMOLNeK8CWXZquvhptqrTuI"},
-{"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ4bXl4IiwiZXhwIjoxNzMxOTAwMDE4LCJpYXQiOjE3MzE4OTI4MTgsInVzZXIiOiJjcm1JZDpDUk0wMDAwMDAwMDAxNzU5NzY4NjQsb3BlbklkOm82Y2RjNHl6VGplNnB3TzlHcXhpVk50UXY0TkUsdW5pb25JZDpvUTlLc3dyQ1duVFNTazVVRTFITnhmSkEzdVdZLHZlcnNpb246VjIifQ.tEYvvTC39FQ7PgIf12eMQyVJFW1bXRZEvtiHag_9sv4"},
-{"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ4bXl4IiwiZXhwIjoxNzM0NDEwNTQ0LCJpYXQiOjE3MzQ0MDMzNDQsInVzZXIiOiJjcm1JZDpDUk0wMDAwMDAwMDAxNzc4NzM5NzIsb3BlbklkOm82Y2RjNHl3UXZKUzdfYkJrWFp3YWVBTDFsMHMsdW5pb25JZDpvUTlLc3dnV1hTbHFDZ1NIMkJ2UzhZRE9HZ3FzLHZlcnNpb246VjIifQ.__4tqOblAKIvILNMaIKeUp94TzI0xOccfvi623v1yQI"},
-{"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ4bXl4IiwiZXhwIjoxNzM0NDE4MzYyLCJpYXQiOjE3MzQ0MDQwNjMsInVzZXIiOiJjcm1JZDpDUk0wMDAwMDAwMDAxNzc4NzYwMTksbG9naW5TdGF0dXM6MCxvcGVuSWQ6bzZjZGM0NW5kVUdfVnFuUHVuN3AwTjBpS1FVMCx1bmlvbklkOm9ROUtzd2puUTJ0SFF5SEw2cXBHMXJEbGlINjAsdmVyc2lvbjpWMiJ9.sPIaJ4qoQlRYaL2Ej8bYLSAbjNBu6DJ2UByaHvxf8zc"},
-{"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ4bXl4IiwiZXhwIjoxNzM0NDIyNjQwLCJpYXQiOjE3MzQ0MDgzNDIsInVzZXIiOiJjcm1JZDpDUk0wMDAwMDAwMDAxNzc4NzgyMTgsbG9naW5TdGF0dXM6MCxvcGVuSWQ6bzZjZGM0N0lzWlJrUERqTlNIa3hJdmVYN1N0byx1bmlvbklkOm9ROUtzd2t3MDdSRjdCb1ZhenRMd1BHTTBILU0sdmVyc2lvbjpWMiJ9.Z4GyvjUpG1-Ef9wa_fRqQJtIhb0v_yx8t0mh5_6GHJs"}
-];
+let envSplitor = ["\n", "&", "@"]; //多账号分隔符，优先使用换行符
+// 从环境变量读取 token，支持多账号
+// 环境变量名: xmtoken
+// 格式: 多个token用@或换行分隔，例如: token1@token2@token3
+var userCookie = ($.isNode() ? process.env[ckName] : $.getdata(ckName)) || '';
 let userList = [];
 let userIdx = 0;
 let userCount = 0;
@@ -105,44 +117,79 @@ const appKey = 'TwUQ01lKS1Km5zlV2f7amsZc5EQYkTbv'
 //---------------------- 脚本入口函数 -----------------------------------
 async function main() {
   try {
-    $.log('\n================== 任务 ==================\n');
-       // 仅调用一次 getTaskList
-       let taskList = [];
-       if (userList.length > 0) {
-         taskList = await userList[0].getTaskList();
-         console.log(`🔷获取到的任务列表: ${JSON.stringify(taskList)}`);
-       }
+    $.log('\n' + '='.repeat(50));
+    $.log('🎯 开始执行任务');
+    $.log('='.repeat(50) + '\n');
+    
+    // 仅调用一次 getTaskList
+    let taskList = [];
+    if (userList.length > 0) {
+      taskList = await userList[0].getTaskList();
+      $.log(`� 获取到 ${taskList.length} 个账号任务\n`);
+    }
+    
     for (let user of userList) {
-      console.log(`🔷账号${user.index} >> Start work`)
+      $.log(`\n${'─'.repeat(50)}`);
+      $.log(`📱 账号 ${user.index} 开始执行`);
+      $.log('─'.repeat(50));
+      
+      // 先获取用户信息
+      const userInfoBefore = await user.getUserInfo();
+      if (userInfoBefore) {
+        const { userName, score, level, mobile } = userInfoBefore;
+        user.userName = userName;
+        user.avatar = userInfoBefore.avatar;
+        user.mobile = mobile;
+        $.log(`�  用户: ${userName || '未知'}${mobile ? ` (${mobile})` : ''}`);
+        $.log(`💰 当前积分: ${score} | 等级: ${level}`);
+      }
+      
       const flag = await user.getSignInfo();
+      
       if (user.ckStatus) {
-        // 获取任务列表
         // 完成任务
+        if (taskList.length > 0) {
+          $.log(`\n📝 开始执行任务列表...`);
           for(let task of taskList) {
             await user.tofinish(task.taskName, task.taskType);
             await $.wait(1000 * (task.completeTaskDuration?task.completeTaskDuration:3))
             await user.completeTask(task.taskName, task.taskType);
             await $.wait(user.getRandomTime());
+          }
         }
-        // 查询用户信息
-        const userInfoResult = await user.getUserInfo();
-        if (userInfoResult) {
-          const { score, level, userName, avatar } = userInfoResult;
+        
+        // 查询最终用户信息
+        const userInfoAfter = await user.getUserInfo();
+        if (userInfoAfter) {
+          const { score, level, userName, avatar, mobile } = userInfoAfter;
           user.avatar = avatar;
           user.userName = userName;
+          user.mobile = mobile;
           await user.refreshToken(user.token);
+          
+          const earnedPoints = userInfoBefore ? score - userInfoBefore.score : 0;
+          $.log(`\n✨ 任务完成`);
+          $.log(`� 用户:分 ${userName}${mobile ? ` (${mobile})` : ''}`);
+          $.log(`💰 最终积分: ${score} ${earnedPoints > 0 ? `(+${earnedPoints})` : ''}`);
+          $.log(`⭐ 等级: ${level}`);
+          
           $.title = `今日任务已全部完成`;
-          DoubleLog(`「${userName}」积分: ${score}, 等级: ${level}`);
+          DoubleLog(`「${userName}」积分: ${score}${earnedPoints > 0 ? ` (+${earnedPoints})` : ''}, 等级: ${level}`);
         }
       } else {
         //将ck过期消息存入消息数组
-        $.notifyMsg.push(`❌账号${user.userName || user.index} >> Check ck error!`)
+        $.notifyMsg.push(`❌账号${user.userName || user.index} >> Token已失效`)
       }
+      
       //账号通知
       $.notifyList.push({ "id": user.index, "avatar": user.avatar, "message": $.notifyMsg });
       //清空数组
       $.notifyMsg = [];
     }
+    
+    $.log(`\n${'='.repeat(50)}`);
+    $.log(`✅ 所有账号执行完成`);
+    $.log('='.repeat(50) + '\n');
   } catch (e) {
     $.log(`⛔️ main run error => ${e}`);
     throw new Error(`⛔️ main run error => ${e}`);
@@ -158,6 +205,7 @@ class UserInfo {
     this.avatar = user.avatar;
     this.ckStatus = true;
     this.doFlag = { "true": "✅", "false": "⛔️" };
+    
     //请求封装
     this.baseUrl = ``;
     this.host = "https://www.feihevip.com/api";
@@ -203,17 +251,21 @@ class UserInfo {
         })
       }
       const res = await this.fetch(opts);
-      const { signStatus } = res?.data;
+      if (!res?.data) {
+        $.log(`⚠️ 签到信息获取失败`);
+        return;
+      }
+      const { signStatus } = res.data;
       if (signStatus === 1) {
         $.log(`✅ 今日已签到`);
       }
 
       if (signStatus === 2) {
-        this.signin();
+        await this.signin();
       }
     } catch (e) {
       this.ckStatus = false;
-      $.log(`⛔️ 执行任务今日签到失败! ${e}`);
+      $.log(`⛔️ 签到失败: ${e}`);
     }
   }
 
@@ -286,10 +338,14 @@ class UserInfo {
       }
       const res = await this.fetch(opts);
       debug(res, `执行任务: ${taskName}`)
-      $.log(`🚀 ${res?.code == '200' ? '开始执行任务: ' + taskName : res?.msg}\n`);
+      if (res?.code == '200') {
+        $.log(`  🚀 开始: ${taskName}`);
+      } else {
+        $.log(`  ⚠️ ${taskName}: ${res?.msg}`);
+      }
     } catch (e) {
       this.ckStatus = false;
-      $.log(`⛔️ 执行任务${taskName}失败! ${e}`);
+      $.log(`  ⛔️ ${taskName} 失败: ${e}`);
     }
   }
   
@@ -314,16 +370,16 @@ class UserInfo {
       if(res?.code == '200') {
         if(res?.data) {
           const point = res?.data?.awardSendPoints;
-          $.log(`✅ 完成任务: ${taskName}, 获取积分: ${point}分\n`);
+          $.log(`  ✅ 完成: ${taskName} +${point}积分`);
         }else{
-          $.log(`✅ 任务: ${taskName} 已完成，请勿重复执行\n`);
+          $.log(`  ℹ️ ${taskName} 已完成`);
         }
       }else{
-        $.log(`⛔️ '完成任务: ${taskName} 失败! ${res?.msg}\n`);
+        $.log(`  ⛔️ ${taskName} 失败: ${res?.msg}`);
       }
     } catch (e) {
       this.ckStatus = false;
-      $.log(`⛔️ 完成任务${taskName}失败! ${e}`);
+      $.log(`  ⛔️ ${taskName} 异常: ${e}`);
     }
   }
   // 获取用户信息
@@ -343,6 +399,7 @@ class UserInfo {
       }
       const res = await this.fetch(opts);
       debug(res, `查询用户信息`)
+      
       if(res?.code == '200' && res?.data) {
         // 积分
         const score = res?.data?.memberPoints?.scoreValue;
@@ -352,9 +409,31 @@ class UserInfo {
         const userName = res?.data?.baseInfo?.nickName;
         // 头像
         const avatar = res?.data?.baseInfo?.headImgUrl;
-        return { score, level, userName, avatar };
+        
+        // 手机号（从多个可能的字段中获取，优先使用看起来像手机号的）
+        let mobile = '';
+        const possibleFields = [
+          res?.data?.baseInfo?.mobile,
+          res?.data?.baseInfo?.fullName,
+          res?.data?.mobile
+        ];
+        
+        // 找到第一个看起来像手机号的字段（11位数字）
+        for (const field of possibleFields) {
+          if (field && /^1\d{10}$/.test(field)) {
+            mobile = field;
+            break;
+          }
+        }
+        
+        // 如果没找到手机号格式的，就用 fullName 或 crmId
+        if (!mobile) {
+          mobile = res?.data?.baseInfo?.fullName || res?.data?.crmId || '';
+        }
+        
+        return { score, level, userName, avatar, mobile };
       }else{
-        $.log(`⛔️ '查询用户信息失败! ${res?.msg}\n`);
+        $.log(`⛔️ 查询用户信息失败! ${res?.msg}\n`);
       }
     } catch (e) {
       this.ckStatus = false;
@@ -383,12 +462,16 @@ class UserInfo {
       //post方法
       let result = await Request(options);
       let refreshToken = result?.data;
-      const index = userCookie.findIndex(e => e.userId == this.userId)
-      userCookie[index].token = refreshToken
-      $.isNode() ? require('fs').writeFileSync('./xmyx_token.json', JSON.stringify(userCookie)) : $.setdata(JSON.stringify(userCookie), ckName);
-      $.log(`🎉 刷新 token 成功\n`)
-      debug(result, '获取token');
-      // return refreshToken;
+      
+      if (refreshToken) {
+        // 更新当前用户的token
+        this.token = refreshToken;
+        this.headers.token = refreshToken;
+        $.log(`🎉 刷新 token 成功`)
+        debug(result, '获取token');
+      } else {
+        $.log(`⚠️ 刷新 token 返回为空`)
+      }
     } catch (e) {
       $.log(`⛔️ 刷新 Token 失败: ${e}`)
     }
@@ -501,19 +584,43 @@ async function checkCodeServer(appid) {
 }
 //检查环境变量
 async function checkEnv() {
-
   try {
+    if (!userCookie) {
+      throw new Error(`❌未检测到环境变量 ${ckName}，请先配置`);
+    }
+
     let usersToAdd = [];
 
-    if (!usersToAdd.length) {
-      const e = envSplitor.find(o => userCookie.includes(o)) || envSplitor[0];
-      userCookie = Array.isArray(userCookie) ? userCookie : $.toObj(userCookie);
+    // 如果是字符串，尝试解析
+    if (typeof userCookie === 'string') {
+      // 尝试解析为JSON
+      try {
+        const parsed = JSON.parse(userCookie);
+        if (Array.isArray(parsed)) {
+          usersToAdd = parsed;
+        } else {
+          usersToAdd = [parsed];
+        }
+      } catch (e) {
+        // 不是JSON格式，按分隔符处理
+        const separator = envSplitor.find(s => userCookie.includes(s)) || envSplitor[0];
+        const tokens = userCookie.split(separator).map(t => t.trim()).filter(Boolean);
+        usersToAdd = tokens.map(token => ({ token }));
+      }
+    } else if (Array.isArray(userCookie)) {
       usersToAdd = userCookie;
+    } else {
+      usersToAdd = [userCookie];
     }
+
+    if (!usersToAdd.length) {
+      throw new Error(`❌未找到有效的token数据`);
+    }
+
     userList.push(...usersToAdd.map(n => new UserInfo(n)).filter(Boolean));
 
     userCount = userList.length;
-    console.log(`共找到${userCount}个账号`);
+    console.log(`✅ 共找到 ${userCount} 个账号`);
     return true;
   } catch (e) {
     throw new Error(`❌checkEnv run error => ${e}`)
