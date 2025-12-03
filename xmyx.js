@@ -174,7 +174,9 @@ async function main() {
           $.log(`⭐ 等级: ${level}`);
           
           $.title = `今日任务已全部完成`;
-          DoubleLog(`「${userName}」积分: ${score}${earnedPoints > 0 ? ` (+${earnedPoints})` : ''}, 等级: ${level}`);
+          // 通知消息包含手机号/fullName
+          const displayName = mobile ? `${userName} (${mobile})` : userName;
+          DoubleLog(`「${displayName}」积分: ${score}${earnedPoints > 0 ? ` (+${earnedPoints})` : ''}, 等级: ${level}`);
         }
       } else {
         //将ck过期消息存入消息数组
